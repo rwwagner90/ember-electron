@@ -2,12 +2,12 @@
 
 const path = require('path');
 const {
-  copySync,
-  existsSync,
+  // copySync,
+  // existsSync,
   readFileSync,
   readJsonSync,
   removeSync,
-  writeFileSync,
+  // writeFileSync,
   writeJsonSync,
 } = require('fs-extra');
 const execa = require('execa');
@@ -45,6 +45,7 @@ describe('end-to-end', function() {
         delete process.env[key];
       }
     });
+    process.env.EMBER_ELECTRON_DEBUG = '1';
 
     // Pack up current ember-electron directory so it can be installed in new ember projects.
     return run('yarn', ['pack', '--filename', path.join(packageTmpDir, 'ember-electron.tgz')]).then(() => {
@@ -89,6 +90,7 @@ describe('end-to-end', function() {
     runTests();
   });
 
+  /*
   describe('with npm', function() {
     before(function() {
       let { name: tmpDir } = tmp.dirSync();
@@ -117,12 +119,14 @@ describe('end-to-end', function() {
 
     runTests();
   });
+  */
 
   function runTests() {
     it('tests', () => {
       return expect(ember('electron:test')).to.eventually.be.fulfilled;
     });
 
+    /*
     it('builds', () => {
       return ember('electron:build').then(() => {
         expect(existsSync(path.join('electron-out', 'ember'))).to.be.ok;
@@ -168,8 +172,10 @@ describe('end-to-end', function() {
 
       return expect(ember('electron:test')).to.eventually.be.fulfilled;
     });
+    */
   }
 
+  /*
   describe('test-runner.js/blueprint update', function() {
     before(function() {
       let { name: tmpDir } = tmp.dirSync();
@@ -194,6 +200,7 @@ describe('end-to-end', function() {
       return expect(ember('electron:test')).to.eventually.be.fulfilled;
     });
   });
+  */
 });
 
 function listenForPrompts(child) {
